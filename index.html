@@ -1,0 +1,938 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Vika Academy</title>
+  <!-- Tailwind CSS CDN for styling -->
+  <script src="https://cdn.tailwindcss.com"></script>
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+
+  <style>
+:root {
+    --brand-primary: #0B8A3F;
+    --brand-secondary: #00a651;
+    --glass-bg: rgba(255, 255, 255, 0.9);
+    --glass-border: rgba(11, 138, 63, 0.15);
+    --glass-shadow: 0 4px 12px 0 rgba(11, 138, 63, 0.1);
+    --text: #222;
+    --muted: #666;
+    --light: #f5f7f6;
+    --dark: #0b0f0d;
+    --radius-xl: 1.5rem;
+    --radius-md: 0.875rem;
+    --font-main: 'Inter', Arial, Helvetica, sans-serif;
+    --transition: all .3s cubic-bezier(.4, 0, .2, 1);
+}
+
+body {
+    margin: 0;
+    font-family: var(--font-main);
+    color: var(--text);
+    background: linear-gradient(120deg, #eef3f7 0%, #e2f8ea 100%);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+.glass {
+    background: var(--glass-bg);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--glass-shadow);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    transition: var(--transition);
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: var(--radius-md);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    padding: 1.25rem;
+    transition: var(--transition);
+}
+
+.card:hover {
+    box-shadow: 0 6px 16px rgba(11, 138, 63, 0.1);
+    transform: translateY(-2px);
+}
+
+header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    background: var(--glass-bg);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.nav-link {
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: var(--radius-md);
+    transition: var(--transition);
+}
+
+.nav-link:hover,
+.nav-link.active {
+    background-color: var(--brand-primary);
+    color: #fff;
+}
+
+.cta-button {
+    background: linear-gradient(90deg, var(--brand-primary), var(--brand-secondary));
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 9999px;
+    font-weight: 700;
+    box-shadow: 0 4px 12px rgba(43, 170, 95, 0.2);
+    transition: var(--transition);
+    border: none;
+    cursor: pointer;
+}
+
+.cta-button:hover {
+    box-shadow: 0 6px 16px rgba(69, 197, 122, 0.3);
+    transform: translateY(-1px);
+}
+
+.content-section {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    min-height: calc(100vh - 100px);
+    animation: fadeIn 0.5s ease-out;
+}
+
+.hidden-section {
+    display: none !important;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+#home {
+    background: linear-gradient(135deg, rgba(177, 218, 194, 0.8) 0%, rgba(108, 111, 110, 0.5) 100%),
+                url('https://placehold.co/1920x600/0B8A3F/ffffff?text=VIKA+ACADEMY+SKILLS') center/cover no-repeat;
+    color: white;
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+}
+
+.hidden { display: none; }
+
+.course-card {
+    transition: transform 0.2s ease;
+}
+
+.course-card:hover {
+    transform: translateY(-3px);
+}
+
+.slider {
+    width: 100%;
+}
+
+.slider-track {
+    display: flex;
+    animation: slide 20s linear infinite;
+}
+
+.slider-track img {
+    flex-shrink: 0;
+}
+
+/* Sliding animation */
+@keyframes slide {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); } /* adjust if needed based on number of images */
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+        <!-- Brand Name and Logo -->
+        <a class="flex items-center space-x-3 text-2xl font-extrabold text-brand-primary" href="#home" id="brand">
+            <img src="img/vikalogoimage.jpg" 
+                 class="w-40 h-33 object-contain" alt="Vika Academy Logo"> <!-- Logo Image -->
+        </a>
+
+        <!-- Navigation Links -->
+        <nav class="hidden md:block">
+            <ul class="flex space-x-6">
+                <li><a href="#home" class="nav-link active" data-section="home">Home</a></li>
+                <li><a href="#about" class="nav-link" data-section="about">About Us</a></li>
+                <li><a href="#courses" class="nav-link" data-section="courses">Training Programs</a></li>
+                <li><a href="#contact" class="nav-link" data-section="contact">Contact</a></li>
+                <li><a href="#Profile" class="nav-link" data-section="profile">Profile</a></li>
+                
+            </ul>
+        </nav>
+        
+        <!-- Mobile Menu Button -->
+        <button id="mobile-menu-btn" class="md:hidden p-2 text-gray-700 hover:text-brand-primary" aria-label="Open menu">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+            </svg>
+        </button>
+
+        <!-- Mobile Dropdown Menu -->
+        <div id="dropdown-menu" class="absolute right-4 top-14 bg-white rounded-lg shadow-lg w-40 hidden md:hidden">
+            <ul class="py-2 text-gray-700">
+                <li><a href="#home" class="block px-4 py-2 hover:bg-gray-100">Home</a></li>
+                <li><a href="#about" class="block px-4 py-2 hover:bg-gray-100">About Us</a></li>
+                <li><a href="#courses" class="block px-4 py-2 hover:bg-gray-100">Training Programs</a></li>
+                <li><a href="#contact" class="block px-4 py-2 hover:bg-gray-100">Contact</a></li>
+                <li><a href="#profile" class="block px-4 py-2 hover:bg-gray-100">profile</a></li>
+            </ul>
+        </div>
+    </div>
+</header>
+
+
+<section id="home" class="content-section" aria-hidden="false">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div class="max-w-2xl">
+            <h1 class="text-6xl font-extrabold mb-4 leading-tight text-white shadow-lg">
+                Specialized Training, Real-World Impact.
+            </h1>
+            <p class="text-xl mb-8 text-white/90">
+                Delivering accredited, industry-focused skills and compliance programs for individuals and corporations across South Africa.
+            </p>
+            <div class="flex space-x-4">
+                <a href="#courses" data-section="courses" 
+                   class="cta-button bg-white text-brand-primary hover:bg-gray-100 transition duration-300 transform hover:scale-105">
+                    View Programs
+        
+</a>
+</section>
+
+<section id="about" class="content-section bg-light hidden-section" aria-hidden="true">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-4xl font-bold text-center mb-12 text-gray-800">About Vika Academy</h2>
+        <div class="grid md:grid-cols-2 gap-10 items-center">
+            
+            <!-- Mission, Vision, Objective -->
+            <div class="card p-6 bg-white/95">
+                <h3 class="text-2xl font-semibold text-brand-primary mb-4">Our Mission</h3>
+                <p class="text-gray-700 mb-4">
+                    We strive and commit to deliver high quality, foster information sharing, be professional, innovative, and reliable training service to attract, develop, motivate, protect and retain a diverse workforce to address critical development issues.
+                </p>
+                <h3 class="text-2xl font-semibold text-brand-primary mb-4">Our Vision</h3>
+                <p>
+                    To be the business community and learning hub for Small, Medium, and Large Enterprises.
+                </p>
+                <br>
+                <h3 class="text-2xl font-semibold text-brand-primary mb-4">Our Objective</h3>
+                <p>
+                    • To increase quality output<br>
+                    • Higher return on investment (ROI) and long-term success<br>
+                    • Enhance quality of work and productivity<br>
+                    • To position and maintain our Human Capital towards the achievement of optimal Strategic Business Objectives
+                </p>
+                <br>
+                <p class="text-sm italic text-muted">
+                    We focus on practical outcomes and accredited short courses that drive immediate career growth and corporate efficiency.
+                </p>
+            </div>
+            
+            <!-- Business Background -->
+            <div class="card p-6 bg-white/95">
+                <h3 class="text-2xl font-semibold text-brand-primary mb-4">Business Background</h3>
+                <p class="text-gray-700">
+                    VIKA BUSINESS BACKGROUND Training Academy is a 100% Small Medium Enterprise (SME), black-owned, controlled, and managed organisation with a social purpose that brings together industry leaders and experts to develop, implement and evaluate interventions and programs to ensure maximum impact for stakeholders/recipients and return on investment. We are an equity organisation with a Level 1 B-BBEE Scorecard. We draw on global best practices to continually push your competitive edge and promote profitability and growth. We have a competitive edge over other service companies in that the turn-around time is remarkably short, while the output is incontrovertibly sublime. Our organisation focuses its services on both the public and private sectors. Our practitioners are based throughout the country and we are able to train in every area of South Africa where necessary. We believe that learning should lead to credits towards qualifications and it should enhance work performance. All our programmes are competency-based and performance-driven. We believe that a focused aligned organisation can be an unstoppable force. We are an organisation founded to empower and embolden businesses and communities to harness natural abilities for a better future society through socially responsible management and community outreach.
+                </p>
+            </div>
+            
+            <!-- Quality & Accreditation -->
+            <div class="card p-6 bg-white/95">
+                <h3 class="text-2xl font-semibold text-brand-primary mb-4">Quality & Accreditation</h3>
+                <div class="space-y-4">
+                    <div class="flex items-center space-x-3">
+                        <span class="text-xl font-bold text-green-600">✓</span>
+                        <p class="text-gray-700">Programmes aligned with <strong>SETA</strong> and <strong>QCTO</strong> standards.</p>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <span class="text-xl font-bold text-green-600">✓</span>
+                        <p class="text-gray-700">Facilitated by <strong>Master Trainers</strong> and certified professionals.</p>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <span class="text-xl font-bold text-green-600">✓</span>
+                        <p class="text-gray-700">Customized <strong>In-House Training</strong> solutions for businesses.</p>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    
+    <br><br>
+    
+    <!-- Our Team -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-4xl font-bold text-center mb-12 text-gray-800">OUR Team</h2>
+        <div class="grid md:grid-cols-2 gap-10 items-center">
+            
+            <!-- Team Member 1 -->
+            <div class="card p-6 bg-white/95">
+                <div style="font-size:44px; color:var(--green)">❝</div>
+                <p>
+                    A professional and registered assessor and moderator with 23 years of experience in the surface mining industry, he holds a B-Tech in Human Resource Management, a Bachelor of Commerce Honours in Human Resource Management, and a Master of Business Administration (MBA).<br><br>
+                    The technical background he has attained includes a National Certificate: Mineral Processing Lump Ore Beneficiation Level 2 to 3, and Further Education and Training Certificate in Mineral Processing as well as Occupationally Directed Education Training and Development Practices Level 5, ODETP Level 5, and a Diploma in ODETP. He holds a 49% stake in the company.
+                </p>
+                <div style="display:flex; align-items:center; gap:18px; margin-top:6px">
+                    <img src="https://i.postimg.cc/MTB7YbLC/Whats-App-Image-2025-10-18-at-17-29-47.jpg" alt="Mr. Kabelo Sehako" style="width:84px; height:84px; border-radius:50%; object-fit:cover; box-shadow:0 4px 20px rgba(31,38,135,.14)">
+                    <strong style="color:var(--green); font-size:17px">MR. KABELO SEHAKO</strong>
+                </div>
+            </div>
+            
+            <!-- Team Member 2 -->
+            <div class="card" style="background:var(--glass-bg); padding:26px; border-radius:var(--radius-xl); display:flex; flex-direction:column; gap:10px">
+                <div style="font-size:34px; color:var(--green)">❝</div>
+                <p>
+                    A professional and registered Skills Development Facilitator, Assessor and Moderator with 22 years of experience in the surface mining industry. She holds a Bachelor of Commerce degree in Human Resource Development (BHRD), Bachelor of Commerce Honours in Human Resource Management and a Master of Business Administration (MBA).<br><br>
+                    On the technical front, she attained National Certificate: Mineral Processing Lump Ore Beneficiation, NQF Levels 2 and 3, and Further Education and Training Certificate in Mineral Processing, as well as Occupationally Directed Education Training and Development Practices Level 5, ODETP Level 5. She holds a 51% stake in the company.
+                </p>
+                <div style="display:flex; align-items:center; gap:18px; margin-top:6px">
+                    <img src="img/mama.jpg" alt="Mrs. Victoria Molongwana" style="width:86px; height:86px; border-radius:60%; object-fit:cover; box-shadow:0 4px 20px rgba(31,38,135,.14)">
+                    <strong style="color:var(--green); font-size:17px">MRS. VICTORIA MOLONGWANA</strong>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+<section id="courses" class="content-section relative overflow-hidden min-h-screen" aria-hidden="true">
+    <!-- 🔄 Sliding Background Images --> 
+   <!-- Slider Wrapper -->
+<div class="slider overflow-hidden relative">
+    <div class="slider-track flex gap-4">
+        <img src="img/track.jpg" class="w-40 h-40 object-cover rounded-lg">
+        <img src="img/fire-fighyet.jpg" class="w-40 h-40 object-cover rounded-lg">
+        <img src="img/microsoft.jpg" class="w-40 h-40 object-cover rounded-lg">
+        <img src="img/mining.jpg" class="w-40 h-40 object-cover rounded-lg">
+        <img src="img/vika-first-aid.jpg.JPG" class="w-40 h-40 object-cover rounded-lg">
+        <img src="img/vika-forklift.jpg.JPG" class="w-40 h-40 object-cover rounded-lg">
+        <img src="img/vika-hight.jpg.JPG" class="w-40 h-40 object-cover rounded-lg">
+        <!-- Repeat images for infinite scroll -->
+        <img src="img/track.jpg" class="w-40 h-40 object-cover rounded-lg">
+        <img src="img/fire-fighyet.jpg" class="w-40 h-40 object-cover rounded-lg">
+        <img src="img/microsoft.jpg" class="w-40 h-40 object-cover rounded-lg">
+        <img src="img/mining.jpg" class="w-40 h-40 object-cover rounded-lg">
+    </div>
+</div>
+<br>
+
+<!-- 🔍 Search Bar -->
+<div class="flex justify-center mb-6">
+    <input type="text" id="searchInput" placeholder="Search for a course (e.g., Forklift, First Aid)"
+           class="w-2/3 md:w-1/2 border border-gray-400 rounded-l-lg px-4 py-2 focus:outline-none">
+    <button onclick="searchCourses()" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2">Search</button>
+    <button onclick="resetCourses()" class="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded-r-lg">Reset</button>
+</div>
+
+<!-- 🔍 Search Results -->
+<div id="searchResults" class="text-center text-gray-700 mb-8"></div>
+
+<!-- 📋 Course Table (hidden by default) -->
+<div id="coursesContainer" class="overflow-x-auto hidden">
+    <table id="coursesTable" class="min-w-full bg-white border border-gray-300">
+        <thead class="bg-gray-100">
+            <tr>
+                <th class="px-4 py-2 border">NR</th>
+                <th class="px-4 py-2 border">COURSE</th>
+                <th class="px-4 py-2 border">COST PER PERSON</th>
+                <th class="px-4 py-2 border">DURATION</th>
+            </tr>
+        </thead>
+        <tbody id="coursesBody">
+            <!-- Courses will be inserted here by JS -->
+        </tbody>
+    </table>
+</div>
+
+<!-- Specialized Training Programs -->
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <h2 class="text-4xl font-bold text-center mb-12 text-gray-800">Specialized Training Programs</h2>
+    <div class="grid lg:grid-cols-3 md:grid-cols-2 gap-8">
+        
+        <!-- Course Card 1: Business & IT Skills -->
+        <div class="card p-6">
+            <h3 class="text-2xl font-bold text-gray-800 mb-2">Business & IT Skills</h3>
+            <p class="text-sm text-brand-primary mb-4">Short Courses & Professional Certifications</p>
+            <ul class="list-disc list-inside space-y-1 text-gray-600 mb-4">
+                <li>Project Management (PMP/Prince2 Alignment)</li>
+                <li>Advanced Microsoft Excel & Data Visualisation</li>
+                <li>Introduction to Cloud Computing (AWS/Azure)</li>
+            </ul>
+            <a href="#contact" data-section="contact" class="text-brand-primary font-semibold hover:underline">Enquire About Business Training →</a>
+        </div>
+        
+        <!-- Course Card 2: Compliance & Safety -->
+        <div class="card p-6">
+            <h3 class="text-2xl font-bold text-gray-800 mb-2">Compliance & Safety</h3>
+            <p class="text-sm text-brand-primary mb-4">Legal & OHS Training</p>
+            <ul class="list-disc list-inside space-y-1 text-gray-600 mb-4">
+                <li>Occupational Health & Safety (OHS) Compliance</li>
+                <li>Risk Assessment and Management</li>
+                <li>Basic Fire Fighting and First Aid</li>
+            </ul>
+            <a href="#contact" data-section="contact" class="text-brand-primary font-semibold hover:underline">Enquire About Compliance →</a>
+        </div>
+        
+        <!-- Course Card 3: Leadership & Management -->
+        <div class="card p-6">
+            <h3 class="text-2xl font-bold text-gray-800 mb-2">Leadership & Management</h3>
+            <p class="text-sm text-brand-primary mb-4">Workplace Readiness & Development</p>
+            <ul class="list-disc list-inside space-y-1 text-gray-600 mb-4">
+                <li>Effective Supervisory Skills</li>
+                <li>Conflict Resolution and Negotiation</li>
+                <li>Team Performance and Cohesion Workshops</li>
+            </ul>
+            <a href="#contact" data-section="contact" class="text-brand-primary font-semibold hover:underline">Enquire About Leadership →</a>
+        </div>
+        
+    </div>
+
+    <!-- Download Price List PDF -->
+    <div class="text-center mt-12">
+        <a href="img/2025_VIKA_TRAINING_PRICE_LIST.pdf" download
+           class="inline-flex items-center px-6 py-3 bg-brand-primary text-black font-semibold rounded-lg shadow-lg hover:bg-brand-primary/90 transition">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-6 h-6 mr-2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M12 16v-8m0 8l-4-4m4 4l4-4m-6 8h8a2 2 0 002-2v-4m-2-8H6a2 2 0 00-2 2v4m16 0V8a2 2 0 00-2-2h-4" />
+            </svg>
+            Download Price List (PDF)
+        </a>
+    </div>
+</div>
+</section>
+
+
+<!-- ===== PROFILE SECTION ===== -->
+<section id="profile" class="content-section hidden-section" aria-hidden="true">
+  <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <h2 class="text-4xl font-bold text-center mb-8 text-gray-800">Profile</h2>
+
+    <!-- Tabs -->
+    <div class="flex justify-center mb-6 space-x-4">
+      <button id="loginTab" class="px-4 py-2 font-semibold border-b-2 border-blue-600">Login</button>
+      <button id="registerTab" class="px-4 py-2 font-semibold border-b-2 border-transparent hover:border-blue-600">Register</button>
+    </div>
+
+    <!-- Login Form -->
+    <div id="loginForm" class="card p-8 shadow-lg">
+      <h3 class="text-2xl font-bold mb-6 text-gray-800">Login</h3>
+      <form id="loginForm" method="POST" action="login_process.php">
+    <input type="email" name="loginEmail" placeholder="Email" required
+           style="border: 2px solid #000; padding: 8px; border-radius: 5px; width: 100%; margin-bottom: 10px;">
+    <input type="password" name="loginPassword" placeholder="Password" required
+           style="border: 2px solid #000; padding: 8px; border-radius: 5px; width: 100%; margin-bottom: 10px;">
+    <button type="submit" style="padding: 10px 20px; border-radius: 5px; border: none; background-color: #007bff; color: white;">Login</button>
+</form>
+    </div>
+
+<!-- Registration Form -->
+<div id="registerForm" class="card p-8 shadow-lg hidden">
+  <h3 class="text-2xl font-bold mb-6 text-gray-800">Register</h3>
+  <form action="register_process.php" method="POST">
+
+  <!-- Full Name: alphabets only -->
+  <div class="mb-4">
+    <input type="text" id="registerFullName" name="registerFullName" placeholder="Full Name" required
+           pattern="[A-Za-z\s]+" title="Full Name must contain letters only"
+           class="w-full p-3 border rounded-lg focus:ring-blue-500 focus:border-blue-500">
+  </div>
+
+  <!-- Email -->
+  <div class="mb-4">
+    <input type="email" id="registerEmail" name="registerEmail" placeholder="Email" required
+           class="w-full p-3 border rounded-lg focus:ring-blue-500 focus:border-blue-500">
+  </div>
+
+  <!-- Phone: 10 digits only -->
+  <div class="mb-4">
+    <input type="tel" id="registerPhone" name="registerPhone" placeholder="Phone Number" required
+           pattern="[0-9]{10}" maxlength="10" title="Phone number must be 10 digits"
+           class="w-full p-3 border rounded-lg focus:ring-blue-500 focus:border-blue-500">
+  </div>
+
+  <!-- Password: min 8 characters -->
+  <div class="mb-4">
+    <input type="password" id="registerPassword" name="registerPassword" placeholder="Password" required
+           minlength="8" title="Password must be at least 8 characters"
+           class="w-full p-3 border rounded-lg focus:ring-blue-500 focus:border-blue-500">
+  </div>
+
+  <!-- Course Selection -->
+  <div class="mb-6">
+    <select id="registerCourse" name="registerCourse" required
+            class="w-full p-3 border rounded-lg focus:ring-blue-500 focus:border-blue-500 text-gray-600">
+      <option value="">-- Choose a Course --</option>
+      <option value="Working at Heights">Working at Heights</option>
+      <option value="First Aid">First Aid</option>
+      <option value="Forklift Operation">Forklift Operation</option>
+      <option value="Health and Safety">Health and Safety</option>
+      <option value="Hazard Identification">Hazard Identification</option>
+    </select>
+  </div>
+
+  <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white py-3 rounded-lg font-semibold">
+    Register
+  </button>
+</form>
+
+<div id="registerResponse"></div>
+
+</div>
+</section>
+    
+
+
+
+
+
+<!-- 5. Contact Section (Hidden by Default) -->
+<section id="contact" class="content-section bg-white/70 hidden-section" aria-hidden="true">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <h2 class="text-4xl font-bold text-center mb-12 text-gray-800">Get In Touch With Vika Academy</h2>
+    
+    <div class="grid md:grid-cols-3 gap-8">
+      
+      <!-- Contact Form -->
+<div class="md:col-span-2">
+  <!-- This tells the form to submit to enquiry_process.php -->
+  <form 
+    action="enquiry_proccess.php"
+    method="POST" 
+    class="card p-8 shadow-lg"
+  >
+          
+          <div class="grid sm:grid-cols-2 gap-4">
+            <input 
+        type="text" 
+        id="fullName" 
+        name="fullName" 
+        placeholder="Your Full Name" 
+        required 
+        class="p-3 border rounded-lg focus:ring-brand-primary focus:border-brand-primary transition"
+         pattern="[A-Za-z\s]+" title="Full Name must contain letters only"
+      >
+
+      <input 
+        type="email" 
+        id="email" 
+        name="email" 
+        placeholder="Email Address" 
+        required 
+        class="p-3 border rounded-lg focus:ring-brand-primary focus:border-brand-primary transition"
+      >
+    </div>
+
+    <input 
+      type="tel" 
+      id="phone" 
+      name="phone" 
+      placeholder="Phone Number (071 6543 701)" 
+      pattern="[0-9]{10}" 
+      maxlength="10"
+      required 
+      class="mt-4 p-3 w-full border rounded-lg focus:ring-brand-primary focus:border-brand-primary transition"
+    >
+
+    <textarea 
+      id="message" 
+      name="message" 
+      rows="5" 
+      placeholder="Your Message or Specific Training Query" 
+      required 
+      class="mt-4 p-3 w-full border rounded-lg focus:ring-brand-primary focus:border-brand-primary transition"
+    ></textarea>
+
+    <button 
+      type="submit" 
+      class="cta-button mt-6 w-full"
+    >
+      Submit Enquiry
+    </button>
+        </form>
+        
+        <br><br>
+        
+        <!-- Accreditations -->
+        <h2 class="text-4xl font-bold text-center mb-12 text-gray-800">Accreditations</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-10 place-items-center">
+          <img src="img/1631333251749.jpg" alt="SAQA" class="w-40 h-40 object-contain grayscale hover:grayscale-0 transition duration-300">
+          <img src="img/download (1).png" alt="Department of Education" class="w-40 h-40 object-contain grayscale hover:grayscale-0 transition duration-300">
+          <img src="img/download.jpg" alt="Microsoft Excel" class="w-40 h-20 object-contain grayscale hover:grayscale-0 transition duration-300">
+          <img src="img/download.png" alt="Red Cross" class="w-40 h-40 object-contain grayscale hover:grayscale-0 transition duration-300">
+          <img src="img/images.jpg" alt="Fire and Rescue Service" class="w-40 h-20 object-contain grayscale hover:grayscale-0 transition duration-300">
+          <img src="img/seta.25b4b98f.png" alt="ISO" class="w-40 h-40 object-contain grayscale hover:grayscale-0 transition duration-300">
+          <img src="img/MICT.jpg" alt="QCTO" class="w-40 h-40 object-contain grayscale hover:grayscale-0 transition duration-300">
+        </div>
+      </div>
+      
+      <!-- Contact Info & Locations -->
+      <div class="space-y-6">
+        <div class="card p-6">
+          <h4 class="text-xl font-semibold text-gray-800 mb-3">Contact Details</h4>
+          <p class="text-gray-700 flex items-center gap-2 mb-2">
+            <i data-lucide="phone" class="w-5 h-5 text-black-600"></i>
+            <span class="font-bold">Landline (Head Office):</span> 053 050 0020
+          </p>
+          <p class="text-gray-700 flex items-center gap-2 mb-2">
+            <i data-lucide="smartphone" class="w-5 h-5 text-black-600"></i>
+            <span class="font-bold">Mobile (Admissions):</span> 073 024 5555
+          </p>
+          <p class="text-gray-700 flex items-center gap-2">
+            <i data-lucide="mail" class="w-5 h-5 text-black-600"></i>
+            <span class="font-bold">Email:</span>
+            <a href="mailto:info@vikaacademy.co.za" class="text-brand-primary hover:underline">info@vikaacademy.co.za</a>
+          </p>
+        </div>
+
+        <div class="card p-6">
+          <h4 class="text-xl font-semibold text-gray-800 mb-3">Head Office & Training Venues</h4>
+          
+          <!-- Northern Cape -->
+          <p class="text-gray-700 font-bold">Northern Cape Training Centre</p>
+          <p class="text-sm text-gray-600">
+            12 Cam Street, Postmasburg, 8420, Northern Cape<br>
+            <span class="text-xs italic">Open for Bookings: Mon - Fri, 08:00 - 16:00</span>
+          </p>
+          <div class="w-full h-64 rounded-lg overflow-hidden shadow-md border border-gray-300 mt-2">
+            <iframe width="100%" height="100%" style="border:0;" loading="lazy" allowfullscreen
+              referrerpolicy="no-referrer-when-downgrade"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3576.4766848338235!2d28.187467775013864!3d-25.864795677315404!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1e956eaf7f0e7649%3A0x2a65d0864f86efb4!2sInnovation%20Hub%20Centurion!5e0!3m2!1sen!2sza!4v1730053000000!5m2!1sen!2sza">
+            </iframe>
+          </div>
+
+          <!-- Limpopo -->
+          <p class="text-gray-700 font-bold mt-4">Limpopo</p>
+          <p class="text-sm text-gray-600">
+            NO 10212 GA-MOLEKANA, Mokopane, 0610, Limpopo, South Africa<br>
+            <span class="text-xs italic">On-site training arranged by appointment.</span>
+          </p>
+          <div class="map-wrapper open mt-3" aria-hidden="false">
+            <iframe title="Mokopane — Vika Training Academy"
+              src="https://maps.google.com/maps?q=NO%2010212%20GA-MOLEKANA,%20MOKOPANE,%200610,%20Limpopo,%20South%20Africa&z=15&output=embed"
+              width="100%" height="260" style="border:0;border-radius:12px" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!-- Include Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+  <script>
+    lucide.createIcons();
+  </script>
+</section>
+
+
+<!-- ===== FLOATING CHATBOX & WHATSAPP ===== -->
+<a href="https://wa.me/27832122319" target="_blank"
+   class="fixed bottom-6 right-6 bg-green-500 hover:bg-green-600 text-white rounded-full w-14 h-14 flex items-center justify-center shadow-lg transition-transform transform hover:scale-110 z-50"
+   title="Chat on WhatsApp">
+   <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 24 24" class="w-7 h-7">
+        <path d="M12.04 2.003c-5.525 0-10.013 4.488-10.013 10.013 0 1.77.461 3.506 1.336 5.037l-1.414 5.181
+      5.31-1.391a10.002 10.002 0 0 0 4.781 1.186h.001c5.525 0 10.013-4.488 10.013-10.013s-4.488-10.013-10.013-10.013zm0 18.229h-.001a8.18 8.18 0 0 1-4.168-1.143l-.298-.177-3.152.826.842-3.088-.194-.316a8.173 8.173 0 0 1-1.262-4.469c0-4.518 3.675-8.193 8.193-8.193 2.19 0 4.247.854 5.796 2.404a8.152 8.152 0 0 1 2.397 5.789c0 4.517-3.676 8.193-8.193 8.193zm4.453-6.155c-.243-.122-1.438-.71-1.662-.792-.224-.082-.388-.122-.552.122-.163.243-.632.792-.775.956-.142.163-.285.184-.528.061-.243-.122-1.024-.377-1.95-1.2-.72-.642-1.206-1.433-1.348-1.676-.143-.243-.015-.374.107-.496.11-.11.243-.285.366-.428.122-.143.163-.243.244-.406.081-.163.041-.305-.02-.427-.061-.122-.551-1.331-.756-1.819-.2-.482-.402-.416-.552-.425l-.47-.008c-.163 0-.428.061-.653.305-.224.243-.856.836-.856 2.037 0 1.201.876 2.362 1 2.526.122.163 1.724 2.63 4.183 3.688.585.252 1.04.403 1.395.516.586.187 1.12.161 1.543.098.471-.071 1.438-.587 1.641-1.155.203-.568.203-1.055.142-1.155-.061-.102-.224-.163-.468-.285z"/>
+   </svg>
+</a>
+
+
+
+
+<script>
+
+  // Chat Form Submission
+  document.getElementById('chatForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const input = document.getElementById('chatInput');
+    const msg = input.value.trim();
+    if (msg) {
+      const phoneNumber = '27832122319'; // Replace with your WhatsApp number
+      const encodedMsg = encodeURIComponent(msg);
+      window.open(`https://wa.me/${phoneNumber}?text=${encodedMsg}`, '_blank');
+
+      const msgBox = document.createElement('div');
+      msgBox.className = 'text-sm text-white bg-green-600 px-3 py-2 rounded-lg self-end ml-auto w-max';
+      msgBox.textContent = msg;
+      document.getElementById('chatMessages').appendChild(msgBox);
+      
+      input.value = '';
+      setTimeout(() => {
+        document.getElementById('chatbox').classList.add('hidden');
+        document.getElementById('openChat').classList.remove('hidden');
+      }, 500);
+    }
+  });
+
+  // Footer Year
+  document.getElementById('yr').textContent = new Date().getFullYear();
+</script>
+
+<!-- Footer -->
+<footer class="bg-gray-800 text-white mt-12">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="flex flex-col md:flex-row justify-between items-center text-sm">
+      <div class="text-center md:text-left mb-4 md:mb-0">
+        <strong class="text-brand-primary">Vika Academy</strong>
+        <p>&copy; <span id="yr"></span> All Rights Reserved.</p>
+      </div>
+      <div class="space-x-4">
+        <a href="#about" data-section="about" class="hover:text-brand-primary transition">Privacy Policy</a>
+        <a href="#contact" data-section="contact" class="hover:text-brand-primary transition">Terms of Use</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // Sections & navigation
+    const sections = document.querySelectorAll('.content-section');
+    const navLinks = document.querySelectorAll('.nav-link');
+    const ctaLinks = document.querySelectorAll('a[data-section]');
+
+    const showSection = (sectionId) => {
+        let targetSection = null;
+        sections.forEach(section => {
+            const isTarget = section.id === sectionId;
+            section.classList.toggle('hidden-section', !isTarget);
+            section.setAttribute('aria-hidden', !isTarget);
+            if (isTarget) targetSection = section;
+        });
+        navLinks.forEach(link => {
+            link.classList.toggle('active', link.getAttribute('data-section') === sectionId);
+        });
+        if (targetSection) {
+            window.scrollTo({ top: targetSection.offsetTop - document.querySelector('header').offsetHeight, behavior: 'smooth' });
+        }
+    };
+
+    [...navLinks, ...ctaLinks].forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const sectionId = this.getAttribute('data-section') || this.getAttribute('href').substring(1);
+            if (sectionId) showSection(sectionId);
+        });
+    });
+
+    // Dropdown menu
+    const menuBtn = document.getElementById('mobile-menu-btn');
+    const dropdownMenu = document.getElementById('dropdown-menu');
+    menuBtn.addEventListener('click', () => dropdownMenu.classList.toggle('hidden'));
+    window.addEventListener('click', (e) => {
+        if (!menuBtn.contains(e.target) && !dropdownMenu.contains(e.target)) {
+            dropdownMenu.classList.add('hidden');
+        }
+    });
+
+    // Initial section
+    const initialHash = window.location.hash.substring(1);
+    showSection(initialHash || 'home');
+
+    // Footer year
+    document.getElementById('yr').textContent = new Date().getFullYear();
+
+    // Courses slider
+    const slides = document.querySelectorAll("#courses-bg .slide");
+    let currentSlide = 0;
+    slides.forEach((s, i) => s.style.opacity = i === 0 ? 1 : 0);
+    setInterval(() => {
+        slides[currentSlide].style.opacity = 0;
+        currentSlide = (currentSlide + 1) % slides.length;
+        slides[currentSlide].style.opacity = 1;
+    }, 5000);
+
+    // Courses
+    const courses = [
+        { nr: 1, name: "First Aid – Basic", cost: "R900,00", duration: "2 Days" },
+        { nr: 2, name: "First Aid – Intermediate", cost: "R1020,00", duration: "2 Days" },
+        { nr: 3, name: "Basic Fire Fighting", cost: "R950,00", duration: "1 Day" },
+        { nr: 4, name: "Health and Safety Rep", cost: "R1000,00", duration: "2 Days" },
+        { nr: 5, name: "Forklift", cost: "R5500,00", duration: "10 Days" },
+        { nr: 6, name: "Mobile Crane", cost: "R1100,00", duration: "2 Days" },
+        { nr: 7, name: "Rigging & Slinging", cost: "R1800,00", duration: "2 Days" },
+        { nr: 8, name: "Confined Spaces", cost: "R1900,00", duration: "1 Day" },
+        { nr: 9, name: "Site Supervisor 8.1", cost: "R1550,00", duration: "2 Days" },
+        { nr: 10, name: "HIV & AIDS Awareness", cost: "R990,00", duration: "1 Day" }
+    ];
+    const tbody = document.getElementById("coursesBody");
+    const messageDiv = document.getElementById("searchResults");
+    const container = document.getElementById("coursesContainer");
+
+    function loadCourses(list) {
+        tbody.innerHTML = "";
+        list.forEach(c => {
+            tbody.innerHTML += `
+                <tr class="hover:bg-gray-50">
+                    <td class="border px-4 py-2">${c.nr}</td>
+                    <td class="border px-4 py-2">${c.name}</td>
+                    <td class="border px-4 py-2">${c.cost}</td>
+                    <td class="border px-4 py-2">${c.duration}</td>
+                </tr>`;
+        });
+    }
+
+    window.searchCourses = () => {
+        const input = document.getElementById("searchInput").value.toLowerCase().trim();
+        const results = courses.filter(c => c.name.toLowerCase().includes(input));
+        if (!input) {
+            messageDiv.innerHTML = "Please enter a course name to search.";
+            container.classList.add("hidden");
+            return;
+        }
+        if (results.length > 0) {
+            messageDiv.innerHTML = `Showing ${results.length} result(s) for "<strong>${input}</strong>"`;
+            loadCourses(results);
+            container.classList.remove("hidden");
+        } else {
+            messageDiv.innerHTML = `No results found for "<strong>${input}</strong>"`;
+            container.classList.add("hidden");
+        }
+    };
+
+    window.resetCourses = () => {
+        document.getElementById("searchInput").value = "";
+        messageDiv.innerHTML = "";
+        loadCourses(courses);
+        container.classList.remove("hidden");
+    };
+
+    // Initial load
+    loadCourses(courses);
+});
+function register(){
+  const form = document.getElementById('registerForm');
+
+form.addEventListener('submit', function(e) {
+  e.preventDefault(); // Prevent page refresh
+
+  const formData = new FormData(form);
+
+  // Send data using fetch API
+  fetch('register_process.php', {
+    method: 'POST',
+    body: formData
+  })
+  .then(response => response.text())
+  .then(data => {
+    document.getElementById('response').innerHTML = data; // Show server response
+  })
+  .catch(error => console.error('Error:', error));
+});
+ }
+
+document.addEventListener('DOMContentLoaded', () => {
+  const loginTab = document.getElementById('loginTab');
+  const registerTab = document.getElementById('registerTab');
+  const loginForm = document.getElementById('loginForm');
+  const registerForm = document.getElementById('registerForm');
+
+  // Tab toggle
+  loginTab.addEventListener('click', () => {
+    loginForm.classList.remove('hidden');
+    registerForm.classList.add('hidden');
+    loginTab.classList.add('border-blue-600');
+    registerTab.classList.remove('border-blue-600');
+  });
+
+  registerTab.addEventListener('click', () => {
+    loginForm.classList.add('hidden');
+    registerForm.classList.remove('hidden');
+    registerTab.classList.add('border-blue-600');
+    loginTab.classList.remove('border-blue-600');
+  });
+
+  // Login form submission
+  //document.getElementById('loginFormElement').addEventListener('submit', (e) => {
+   // e.preventDefault();
+    //const email = document.getElementById('loginEmail').value;
+    //const password = document.getElementById('loginPassword').value;
+    // TODO: Replace with actual authentication
+    //alert(`Logged in as: ${email}`);
+ // });
+ function login(){
+  const emaillogin = document.getElementById('loginEmail').value;
+    const passwordlogin = document.getElementById('loginPassword').value;
+    $.ajax({ 
+      url:"login.php",
+  type:"POST",
+  data:{
+    emaillogin:emaillogin,
+    passwordlogin:passwordlogin
+  },
+  success:function (response){
+    if(response.success)
+    {
+      $("#responseDisplayer").removeAttr("hidden").html(`<div class='alert alert-success'>${response.message}</div>`);
+    }else{
+      $("#responseDisplayer").removeAttr("hidden").html(`<div class='alert alert-danger'>${response.message}</div>`);
+    }
+  }
+    });
+
+ }
+
+//   // Registration form submission
+//   document.getElementById('registerFormElement').addEventListener('submit', (e) => {
+//     e.preventDefault();
+//     const name = document.getElementById('registerFullName').value;
+//     const email = document.getElementById('registerEmail').value;
+//     const phone = document.getElementById('registerPhone').value;
+//     const password = document.getElementById('registerPassword').value;
+//     // TODO: Save user data (localStorage or backend)
+//     alert(`Registered: ${name} (${email})`);
+//     registerForm.classList.add('hidden');
+//     loginForm.classList.remove('hidden');
+//   });
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+    const toggleBtn = document.getElementById('toggleRegisterBtn');
+    const formContainer = document.getElementById('registerFormContainer');
+    const regForm = document.getElementById('registrationForm');
+
+    // Show/hide the form
+    toggleBtn.addEventListener('click', () => {
+      const isVisible = formContainer.style.display === 'block';
+      formContainer.style.display = isVisible ? 'none' : 'block';
+      toggleBtn.textContent = isVisible ? 'Register Now' : 'Hide Form';
+    });
+
+//     // Handle form submission
+//     regForm.addEventListener('submit', (e) => {
+//       e.preventDefault();
+//       const name = document.getElementById('fullName').value;
+//       const email = document.getElementById('email').value;
+//       const phone = document.getElementById('phone').value;
+//       const course = document.getElementById('course').value;
+
+//       alert(`✅ Thank you, ${name}!\nYou have registered for the ${course} course.\nWe'll contact you at ${email} or ${phone}.`);
+
+//       regForm.reset();
+//       formContainer.style.display = 'none';
+//       toggleBtn.textContent = 'Register Now';
+//     });
+  });
+
+
+</script>
